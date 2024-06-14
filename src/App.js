@@ -1,25 +1,59 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Box } from '@mui/material';
 import './App.css';
+import NavBar from './components/NavBar';
+import HomePage from './components/HomePage';
+import ProductsPage from './components/ProductsPage';
+import CheckoutPage from './components/CheckoutPage';
+import ContactPage from './components/ContactPage';
+import CartPage from './components/CartPage';
+import AdminPanel from './components/AdminPanel';
+import AdminInvoices from './components/AdminInvoices';
+import AdminLoginPage from './components/AdminLoginPage';
+import LoginPage from './components/LoginPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <Box>
+            <NavBar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/admin" element={<ProtectedRoute element={AdminPanel} isAdminRoute={true} />} />
+              <Route path="/admin/invoices" element={<ProtectedRoute element={AdminInvoices} isAdminRoute={true} />} />
+              <Route path="/admin-login" element={<AdminLoginPage />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </Box>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
