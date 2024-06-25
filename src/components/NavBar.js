@@ -33,6 +33,9 @@ const NavBar = () => {
         <Button color="inherit" component={Link} to="/cart">Cart</Button>
         {auth.isLoggedIn ? (
           <>
+            {auth.isAdmin && (
+              <Button color="inherit" component={Link} to="/adminpanel">Admin Panel</Button>
+            )}
             <Button color="inherit" component={Link} to="/checkout">Checkout</Button>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
           </>
@@ -46,6 +49,7 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
 
 
 

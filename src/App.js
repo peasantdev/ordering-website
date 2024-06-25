@@ -29,7 +29,7 @@ function App() {
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/admin" element={<ProtectedRoute element={AdminPanel} isAdminRoute={true} />} />
+              <Route path="/adminpanel" element={<ProtectedRoute element={AdminPanel} isAdminRoute={true} />} />
               <Route path="/admin/invoices" element={<ProtectedRoute element={AdminInvoices} isAdminRoute={true} />} />
               <Route path="/admin-login" element={<AdminLoginPage />} />
               <Route path="/login" element={<LoginPage />} />
@@ -42,6 +42,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

@@ -15,7 +15,7 @@ const AdminLoginPage = () => {
       const response = await axios.post('http://localhost:5000/api/login', { username, password });
       if (response.data.isAdmin) {
         loginAsAdmin(response.data);
-        navigate('/admin');
+        navigate('/adminpanel');
       } else {
         alert('Invalid admin credentials');
       }
