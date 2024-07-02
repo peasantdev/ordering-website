@@ -12,6 +12,7 @@ import AdminPanel from './components/AdminPanel';
 import AdminInvoices from './components/AdminInvoices';
 import AdminLoginPage from './components/AdminLoginPage';
 import LoginPage from './components/LoginPage';
+import AdminEditProduct from './components/AdminEditProduct'; // Import the new component
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -31,6 +32,7 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/adminpanel" element={<ProtectedRoute element={AdminPanel} isAdminRoute={true} />} />
               <Route path="/admin/invoices" element={<ProtectedRoute element={AdminInvoices} isAdminRoute={true} />} />
+              <Route path="/admin/edit-product/:id" element={<ProtectedRoute element={AdminEditProduct} isAdminRoute={true} />} /> {/* Add this route */}
               <Route path="/admin-login" element={<AdminLoginPage />} />
               <Route path="/login" element={<LoginPage />} />
             </Routes>
@@ -42,6 +44,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

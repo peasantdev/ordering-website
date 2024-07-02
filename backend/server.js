@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const Invoice = require('./models/Invoice');
 const User = require('./models/User');
 const Product = require('./models/Product');
+const productRoutes = require('./routes/products'); // Add this line
 
 const app = express();
 
@@ -14,7 +15,9 @@ app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost:27017/dark-horse', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// User registration endpoint (for testing/admin use to create new users)
+app.use('/api/products', productRoutes); // Ensure this path is correct
+
+// User registration endpoint
 app.post('/api/users', async (req, res) => {
   const { username, password, isAdmin } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -106,60 +109,9 @@ app.get('/api/invoices/:userId', async (req, res) => {
   }
 });
 
-// Endpoint to fetch all products with search and filter functionality
-app.get('/api/products', async (req, res) => {
-  try {
-    const { search, minPrice, maxPrice, department } = req.query;
-    const query = {};
-
-    if (search) {
-      query.name = { $regex: search, $options: 'i' }; // case-insensitive search
-    }
-
-    if (minPrice) {
-      query.price = { ...query.price, $gte: Number(minPrice) };
-    }
-
-    if (maxPrice) {
-      query.price = { ...query.price, $lte: Number(maxPrice) };
-    }
-
-    if (department) {
-      query.department = department;
-    }
-
-    const products = await Product.find(query);
-    res.send(products);
-  } catch (error) {
-    res.status(500).send({ message: 'Error fetching products', error });
-  }
-});
-
-// Endpoint to add a new product
-app.post('/api/products', async (req, res) => {
-  const { name, description, price, department } = req.body;
-  const product = new Product({ name, description, price, department });
-  try {
-    await product.save();
-    res.send(product);
-  } catch (error) {
-    res.status(400).send({ message: 'Error adding product', error });
-  }
-});
-
-// Endpoint to delete a product
-app.delete('/api/products/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Product.findByIdAndDelete(id);
-    res.status(200).send({ message: 'Product deleted successfully' });
-  } catch (error) {
-    res.status(500).send({ message: 'Error deleting product', error });
-  }
-});
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
 
 

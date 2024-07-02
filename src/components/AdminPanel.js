@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Box, TextField, Button, List, ListItem, ListItemText, Select, MenuItem } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const AdminPanel = () => {
   const [products, setProducts] = useState([]);
@@ -129,6 +130,9 @@ const AdminPanel = () => {
                 primary={product.name}
                 secondary={`Description: ${product.description}, Price: $${product.price}, Department: ${product.department}`}
               />
+              <Button component={Link} to={`/admin/edit-product/${product._id}`} variant="contained" sx={{ mr: 1 }}>
+                Edit
+              </Button>
               <Button variant="contained" color="secondary" onClick={() => deleteProduct(product._id)}>
                 Delete
               </Button>
@@ -201,6 +205,9 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
+
+
+
 
 
 
